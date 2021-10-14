@@ -1,55 +1,54 @@
+// ------------ Récupère l'id du canapé sélectionné -------- //
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const canapId = urlParams.get("id");
 let urlAPI = "http://localhost:3000/api/products/"+ canapId;
-let itemImg = document.getElementsByClassName("item__img");
+// ************************** //
 
+// -------------- Création de variables pour intégrer l'img, le prix, titre, description etc...-----------//
+let itemImg = document.querySelector(".item__img");
+let img = document.createElement("img");
+let balisePrice = document.getElementById("price");
+let title = document.getElementById("title")
+let description = document.getElementById("description")
+let colors = document.getElementById("colors");
+let baliseColors = document.createElement("option");
+// ************************** //
 
-
-console.log(itemImg);
-console.log(queryString);
-console.log(urlParams);
-console.log(canapId);
-console.log(urlAPI);
-
-
-
-
+// ---------------- Création de la méthode Fetch ------------ //
 fetch(urlAPI)
-    .then((response) => {
-    response
-      .json()
-      .then((result) => {
-        (result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    });
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then(function(dataCanap) { // le .then récupère les données que j'ai appellé "dataCanap"
+  
+    // intégration des différents éléments dans le Html
+    img.src = dataCanap.imageUrl;
+    itemImg.appendChild(img);
+    balisePrice.innerHTML = `${dataCanap.price/100}`;
+    title.innerHTML =`${dataCanap.name}`
+    description.innerHTML =`${dataCanap.description}`
+    
+    baliseColors.value = function QtyColors(selectColors) {
+      let colors = 0;
+      for(let i = 0; i < selectColors.option.lenght; i++) {
+        if (selectColors.option[i].selected) {
+          colors++;
+        }
+      }
+      return colors;
+    }; 
+    ;
+    baliseColors.innerHTML = `${dataCanap.colors}`
+    colors.appendChild(baliseColors);
 
+    console.log(colors);
+    
 
-itemImg.innerHtml = `
-<img src="${result.imageUrl}" alt="Photographie d'un canapé">
-`
-// function displayCanap(canap){
-
-//     itemImg.innerHtml = `
-//     <img src="../images/logo.png" alt="Photographie d'un canapé">
-//     ` 
-// };
-
-// function card(result) {
-//     let canapHtml = "";
-//     result.forEach((canap) => {
-//       canapHtml += `
-//         <a href="./product.html?id=${canap._id}">
-//             <article>
-//               <img src="${canap.imageUrl}" alt="${canap.altTxt}">
-//               <h3 class="productName">${canap.name}</h3>
-//               <p class="productDescription">${canap.description}</p>
-//             </article>
-//           </a>
-//         `
-//     });
-//     items.innerHTML = canapHtml;
-// };
+  })
+  .catch(function(err) {
+    console.log("Erreur !");
+  })
+// ************************** //

@@ -1,19 +1,32 @@
 let items = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")
-.then((response) => {
-    response
-      .json()
-      .then((result) => {
-        card(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
+    }
   })
-  .catch((error) => {
-    console.log(error);
-});
+  .then(function(DataCanap) {
+    card(DataCanap);
+  })
+  .catch(function(err) {
+    console.log("Erreur !");
+  })
+
+
+// .then((response) => {
+//     response
+//       .json()
+//       .then((result) => {
+//         card(result);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   })
+//   .catch((error) => {
+//     console.log(error);
+// });
 
 
 function card(result) {
