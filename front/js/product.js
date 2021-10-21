@@ -50,24 +50,53 @@ fetch(urlAPI)
     })
     // ************************** //
     // ------------------ récupère la selection de l'utilisateur pour la quantité etc... ------------- //
-  
+    
+    // ---------------- fonction qui repère les changements de l'input quantité ---------------- // 
+    
+    Qty.addEventListener('change', quantityChanged);
+    let getQty = 1  ;
+    
+    function quantityChanged(event) {
+      let input = event.target
+      if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1;
+      }
+      getQty = input.value;
+      console.log(getQty);
+      return getQty;
+    };
+    
+    // ************************** //
+    // ---------------- fonction qui repère les changements du select couleur ---------------- //
+    
+    select.addEventListener('change', ColorChanged);
+    let getColor = "";
+    
+    function ColorChanged(event) {
+        let input = event.target
+        if (input.value === null) {
+            input.value = "";
+        }
+        getColor = input.value;
+        console.log(typeof getColor);
+        return getColor;
+    };
 
     // ************************** //
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
-    
     addToCart.addEventListener("click", goCart);
     function goCart(){
-      // document.location.href="cart.html";
+      document.location.href="cart.html";
       ProductArray = [];
 
       let Product = {
         "_id": dataCanap._id,
-        "quantity": select.selectedIndex,
-        "color": select.selectedIndex,
+        "quantity": parseInt(getQty),
+        "color": getColor,
       };
-      console.log(select.text);
+      console.log(Product);
 
-      ProductArray.push(Product);
+      ProductArray.push(Product, );
       localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
       
       console.log("Produit enregistrer dans le localeStorage !");

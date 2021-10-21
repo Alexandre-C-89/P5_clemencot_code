@@ -5,3 +5,4 @@ const canapId = urlParams.get("id");
 let urlAPI = "http://localhost:3000/api/products/"+ canapId;
 console.log(queryString);
 // ************************** //
+
