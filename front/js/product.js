@@ -18,6 +18,7 @@ let select = document.getElementById("colors"); // Récupère la balise avec l'I
 let baliseOtpion = document.getElementById("option");
 let Qty = document.getElementById("quantity");
 let addToCart = document.getElementById("addToCart");
+let ProductArray = [];
 
 // console.log(colors);
 
@@ -45,9 +46,11 @@ fetch(urlAPI)
       baliseOption.textContent = option;
       return baliseOption;
     };
+    
     dataCanap.colors.forEach(option => {
       select.appendChild(createOption(option));
-    })
+    });
+
     // ************************** //
     // ------------------ récupère la selection de l'utilisateur pour la quantité etc... ------------- //
     
@@ -65,7 +68,7 @@ fetch(urlAPI)
       console.log(getQty);
       return getQty;
     };
-    
+
     // ************************** //
     // ---------------- fonction qui repère les changements du select couleur ---------------- //
     
@@ -82,24 +85,35 @@ fetch(urlAPI)
         return getColor;
     };
 
+
     // ************************** //
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
     addToCart.addEventListener("click", goCart);
     function goCart(){
-      document.location.href="cart.html";
-      ProductArray = [];
+      // document.location.href="cart.html";
 
       let Product = {
         "_id": dataCanap._id,
         "quantity": parseInt(getQty),
         "color": getColor,
       };
-      console.log(Product);
-
-      ProductArray.push(Product, );
-      localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
       
+      console.log(ProductArray);
+      
+      // -------------- Si il y a déjà des produits dans le localeStorage ou non ----------- //
+      // if(ProductArray) {
+      //   ProductArray.push(Product);
+      //   localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
+        
+      // } else {
+      //   ProductArray = [];
+      // };
+
+
+      ProductArray.push(Product);
+      localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
       console.log("Produit enregistrer dans le localeStorage !");
+      console.log(ProductArray);
     };
     // ************************** //
   })
@@ -107,3 +121,4 @@ fetch(urlAPI)
     console.log("Erreur !");
   })
 // ************************** //
+console.log(ProductArray);
