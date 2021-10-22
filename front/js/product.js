@@ -90,15 +90,18 @@ fetch(urlAPI)
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
     addToCart.addEventListener("click", goCart);
     function goCart(){
-      // document.location.href="cart.html";
+      document.location.href="cart.html";
 
       let Product = {
         "_id": dataCanap._id,
+        "nom": dataCanap.name,
         "quantity": parseInt(getQty),
         "color": getColor,
+        "image": dataCanap.imageUrl,
+        "prix": dataCanap.price,
+        "description": dataCanap.description,
       };
       
-      console.log(ProductArray);
       
       // -------------- Si il y a déjà des produits dans le localeStorage ou non ----------- //
       // if(ProductArray) {

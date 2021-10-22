@@ -1,48 +1,51 @@
 // ------------ Récupère l'id du canapé sélectionné -------- //
 let recupArray = JSON.parse(localStorage.getItem("ProductArray"));
-console.log(recupArray);
+let cartItems = document.getElementById("cart__items");
+
 // ************************** //
 
-fetch("http://localhost:3000/api/products")
-  .then(function(res) {
-    if (res.ok) {
-      return res.json();
-    }
-  })
-  .then(function(DataCanap) {
-    card(DataCanap);
-  })
-  .catch(function(err) {
-    console.log("Erreur !");
-  });
-// *********************** //
+// fetch("http://localhost:3000/api/products")
+//   .then(function(res) {
+//     if (res.ok) {
+//       return res.json();
+//     }
+//   })
+//   .then(function(DataCanap) {
+//     card(DataCanap);
+// })
+// .catch(function(err) {
+//     console.log("Erreur !");
+// });
 
+card(recupArray);
+
+    
 // ------- Fonction "card" qui injecte le code html dans la balise <section> avec l'id cart__items ------------- //
-function card(result) { 
+function card(results) {
     let canapHtml = "";
-    result.forEach((canap) => {
-      canapHtml += `
-      <article class="cart__item" data-id="${canap._id}">
-      <div class="cart__item__img">
-        <img src="${canap.imageUrl}" alt="Photographie d'un canapé">
-      </div>
-      <div class="cart__item__content">
+    results.forEach((item) => {
+        canapHtml += `
+        <article class="cart__item" data-id="${item._id}">
+        <div class="cart__item__img">
+        <img src="${item.image}" alt="Photographie d'un canapé">
+        </div>
+        <div class="cart__item__content">
         <div class="cart__item__content__titlePrice">
-          <h2>${canap.name}</h2>
-          <p>${canap.price}</p>
+            <h2>${item.nom}</h2>
+            <p>${item.prix/100}</p>
         </div>
         <div class="cart__item__content__settings">
-          <div class="cart__item__content__settings__quantity">
+            <div class="cart__item__content__settings__quantity">
             <p>Qté : </p>
-            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
-          </div>
-          <div class="cart__item__content__settings__delete">
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
+            </div>
+            <div class="cart__item__content__settings__delete">
             <p class="deleteItem">Supprimer</p>
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
     </article>
         `
     });
-    items.innerHTML = canapHtml;
+    cartItems.innerHTML = canapHtml;
 };
