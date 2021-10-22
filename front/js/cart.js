@@ -1,6 +1,10 @@
 // ------------ Récupère l'id du canapé sélectionné -------- //
 let recupArray = JSON.parse(localStorage.getItem("ProductArray"));
 let cartItems = document.getElementById("cart__items");
+let totalPrice = document.getElementById("totalPrice");
+let total = 0;
+let totalQuantity = document.getElementById("totalQuantity");
+
 
 // ************************** //
 
@@ -17,10 +21,9 @@ let cartItems = document.getElementById("cart__items");
 //     console.log("Erreur !");
 // });
 
-card(recupArray);
-
-    
 // ------- Fonction "card" qui injecte le code html dans la balise <section> avec l'id cart__items ------------- //
+card(recupArray);
+    
 function card(results) {
     let canapHtml = "";
     results.forEach((item) => {
@@ -48,4 +51,12 @@ function card(results) {
         `
     });
     cartItems.innerHTML = canapHtml;
+    // ------------ Prix Total de la commande ----------------------- //
+    results.forEach(item => {
+        total += item.quantity * item.prix;
+      });
+      
+      totalPrice.innerHTML = total/100;
+    // ************************** //
 };
+// ************************** //
