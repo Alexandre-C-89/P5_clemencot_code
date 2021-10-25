@@ -94,11 +94,11 @@ fetch(urlAPI)
 
       let Product = {
         "_id": dataCanap._id,
-        "nom": dataCanap.name,
+        "name": dataCanap.name,
         "quantity": parseInt(getQty),
         "color": getColor,
         "image": dataCanap.imageUrl,
-        "prix": dataCanap.price,
+        "price": dataCanap.price,
         "description": dataCanap.description,
       };
       
@@ -116,7 +116,6 @@ fetch(urlAPI)
       ProductArray.push(Product);
       localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
       console.log("Produit enregistrer dans le localeStorage !");
-      console.log(ProductArray);
     };
     // ************************** //
   })
@@ -124,4 +123,3 @@ fetch(urlAPI)
     console.log("Erreur !");
   })
 // ************************** //
-console.log(ProductArray);

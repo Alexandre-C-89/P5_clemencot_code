@@ -4,23 +4,10 @@ let cartItems = document.getElementById("cart__items");
 let totalPrice = document.getElementById("totalPrice");
 let total = 0;
 let totalQuantity = document.getElementById("totalQuantity");
-
-
+let itemQuantity = document.querySelector("itemQuantity");
+let deleteItem = document.querySelector(".deleteItem");
+let panier = [];
 // ************************** //
-
-// fetch("http://localhost:3000/api/products")
-//   .then(function(res) {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//   })
-//   .then(function(DataCanap) {
-//     card(DataCanap);
-// })
-// .catch(function(err) {
-//     console.log("Erreur !");
-// });
-
 // ------- Fonction "card" qui injecte le code html dans la balise <section> avec l'id cart__items ------------- //
 card(recupArray);
     
@@ -34,8 +21,8 @@ function card(results) {
         </div>
         <div class="cart__item__content">
         <div class="cart__item__content__titlePrice">
-            <h2>${item.nom}</h2>
-            <p>${item.prix/100}</p>
+            <h2>${item.name}</h2>
+            <p>${item.price/100}</p>
         </div>
         <div class="cart__item__content__settings">
             <div class="cart__item__content__settings__quantity">
@@ -51,12 +38,107 @@ function card(results) {
         `
     });
     cartItems.innerHTML = canapHtml;
+    console.log(cartItems);
+    // ---------------- fonction qui repère les changements de l'input quantité ---------------- // 
+
+    // itemQuantity.addEventListener('change', quantityChanged);
+    // let getQty = 1  ;
+    
+    // function quantityChanged(event) {
+    //     let input = event.target
+    //     if (isNaN(input.value) || input.value <= 0) {
+    //     input.value = 1;
+    //     }
+    //     getQty = input.value;
+    //     console.log(getQty);
+    //     return getQty;
+    // };
+    // console.log(itemQuantity);
+    // ************************** //
+    deleteItem.addEventListener("click", supItem);
+    
+    function supItem(e) {
+        localStorage.removeItem(item._id);
+    }
+    console.log(deleteItem);
     // ------------ Prix Total de la commande ----------------------- //
     results.forEach(item => {
-        total += item.quantity * item.prix;
-      });
+        total += item.quantity * item.price;
+    });
       
-      totalPrice.innerHTML = total/100;
+      totalPrice.textContent = total/100;
     // ************************** //
 };
 // ************************** //
+// ------------------------ Partie formulaire (RegExp, récupération données inputs etc...) ------------------------- //
+
+const order = document.getElementById("order"); //  Selection btn du formulaire
+
+order.addEventListener("click", (e) => {
+  e.preventDefault();
+  
+  // Récupération des valeurs du formulaire
+  const contact = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    address: document.getElementById("address").value,
+    city: document.getElementById("city").value,
+    email: document.getElementById("email").value,
+  };
+  // ************************** //
+  // -------- Gestion validation formulaire ------------- //
+  // Contrôle firstName, lastName, address et city
+  const RegExp1 = (value) => {
+    return /^[A-Za-z]{3,15}$/.test(value);
+  }
+  // ************************** //
+  // Contrôle du email
+  const regExp2 = (value) => {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+  };
+  // ************************** //
+  function controle1(){
+    // Contrôle de la validité du prénom
+    const firstName = contact.firstName;
+    const lastName = contact.lastName;
+    const city = contact.city;
+    if(RegExp1(firstName, lastName, city)){
+      return true;
+    }else{
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      return false;
+    }
+  };
+  // ************************** //
+  // ------------- Contrôle de la validité du prénom ---------------- //
+  function controle2(){
+    const email = contact.email;
+    if(regExp2(email)){
+      return true;
+    }else{
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      return false;
+    }
+  };
+  // ************************** //
+  console.log(contact);
+  // ------------------- condition de controle du remplissage du formulaire -------------- // 
+  if(controle1() && controle2()){
+    // Mettre l'objet "formulaireValues" dans le localStorage
+    localStorage.setItem("contact", JSON.stringify(contact)); 
+  }else{
+    alert("Veuillez bien rempli le formulaire");
+  };
+  
+  // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
+  const aEnvoyer = {
+    contact,
+    recupArray,
+  };
+
+  localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
+  // ************************** //
+  // redirection page confirmation de commande
+  document.location.href="confirmation.html";
+  // ************************** //
+});
