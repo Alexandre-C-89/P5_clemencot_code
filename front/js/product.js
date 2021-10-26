@@ -104,13 +104,13 @@ fetch(urlAPI)
       
       
       // -------------- Si il y a déjà des produits dans le localeStorage ou non ----------- //
-      // if(ProductArray) {
-      //   ProductArray.push(Product);
-      //   localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
+      if(ProductArray) {
+        ProductArray.push(Product);
+        localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
         
-      // } else {
-      //   ProductArray = [];
-      // };
+      } else {
+        ProductArray = [];
+      };
 
 
       ProductArray.push(Product);
