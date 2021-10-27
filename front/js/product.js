@@ -5,7 +5,6 @@ const canapId = urlParams.get("id");
 let urlAPI = "http://localhost:3000/api/products/"+ canapId;
 // console.log(window.location);
 
-
 // ************************** //
 
 // -------------- Création de variables pour intégrer l'img, le prix, titre, description etc...-----------//
@@ -83,10 +82,11 @@ fetch(urlAPI)
         console.log(typeof getColor);
         return getColor;
     };
-
-
+    
     // ************************** //
+
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
+    
     addToCart.addEventListener("click", goCart);
     function goCart(){
       let Product = {
@@ -106,8 +106,11 @@ fetch(urlAPI)
       localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
       console.log("Produit enregistrer dans le localeStorage !");
       document.location.href="cart.html";
+      console.log(Product._id);
     };
+    
     // ************************** //
+  
   })
   .catch(function() {
     console.log("Erreur !");

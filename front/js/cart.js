@@ -53,12 +53,26 @@ function card(results) {
 // ************************** //
 
 // ------------ supprimer un objet -------------------- //
-let deleteItem = document.querySelector(".deleteItem");
+let deleteItems = document.querySelectorAll(".deleteItem");
 
-deleteItem.addEventListener("click", () => {
-    localStorage.removeItem("ProductArray");
-    window.location.reload();
+
+deleteItems.forEach(item => {
+  item.addEventListener('click', event => {
+    const article = event.target.closest('article')
+    const id = article.getAttribute('data-id')
+    article.remove(id);
+    // localStorage.setItem("recupArray", JSON.stringify(recupArray));
+  });
 });
+
+// deleteItem.addEventListener("click", (event) => {
+//     console.log(idItem);
+//     console.log("l'article parent est : ", event.target.closest("article"));
+//     recupArray.forEach((item) => {
+//       console.log(item._id);
+//       event.target.closest("article");
+//     });
+// });
 
 // ************************** //
 
@@ -70,7 +84,7 @@ order.addEventListener("click", (e) => {
   e.preventDefault();
   
   // Récupération des valeurs du formulaire
-  const contact = {
+  let contact = {
     firstName: document.getElementById("firstName").value,
     lastName: document.getElementById("lastName").value,
     address: document.getElementById("address").value,
@@ -121,21 +135,30 @@ order.addEventListener("click", (e) => {
   // ------------------- condition de controle du remplissage du formulaire -------------- // 
   if(controle1() && controle2()){
     // Mettre l'objet "formulaireValues" dans le localStorage
-    localStorage.setItem("contact", JSON.stringify(contact)); 
+    // localStorage.setItem("contact", JSON.stringify(contact));
+    console.log("Formulaire rempli !");
+    alert("Merci d'avoir rempli le formulaire");
   }else{
     alert("Veuillez bien rempli le formulaire");
   };
   
   // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
-  const aEnvoyer = {
-    contact,
-    recupArray,
-  };
+  // const aEnvoyer = {
+  //   contact,
+  //   recupArray,
+  // };
 
-  localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
+  // localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
+
+
   // ************************** //
+
+  // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
   
+  // ************************** //
+
   // redirection page confirmation de commande
   document.location.href="confirmation.html";
   // ************************** //
+
 });
