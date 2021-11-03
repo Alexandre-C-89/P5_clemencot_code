@@ -17,8 +17,7 @@ let select = document.getElementById("colors"); // Récupère la balise avec l'I
 let baliseOtpion = document.getElementById("option");
 let Qty = document.getElementById("quantity");
 let addToCart = document.getElementById("addToCart");
-let ProductArray = [];
-
+let productArray = [];
 // console.log(colors);
 
 // ************************** //
@@ -86,7 +85,7 @@ fetch(urlAPI)
     // ************************** //
 
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
-    
+  
     addToCart.addEventListener("click", goCart);
     function goCart(){
       let Product = {
@@ -99,11 +98,11 @@ fetch(urlAPI)
         "description": dataCanap.description,
       };
 
-      if(localStorage && localStorage.getItem("ProductArray")) {
-        var ProductArray = JSON.parse(localStorage.getItem("ProductArray"));
+      if(localStorage && localStorage.getItem("productArray")) {
+        productArray = JSON.parse(localStorage.getItem("productArray"));
       }
-      ProductArray.push(Product);
-      localStorage.setItem("ProductArray", JSON.stringify(ProductArray));
+      productArray.push(Product);
+      localStorage.setItem("productArray", JSON.stringify(productArray));
       console.log("Produit enregistrer dans le localeStorage !");
       document.location.href="cart.html";
       console.log(Product._id);
@@ -116,4 +115,3 @@ fetch(urlAPI)
     console.log("Erreur !");
   })
 // ************************** //
-

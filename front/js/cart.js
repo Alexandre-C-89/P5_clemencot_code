@@ -1,14 +1,15 @@
 // ------------ Récupère l'id du canapé sélectionné -------- //
 
-let recupArray = JSON.parse(localStorage.getItem("ProductArray"));
+let productArray = JSON.parse(localStorage.getItem("productArray"));
 let cartItems = document.getElementById("cart__items");
 let totalPrice = document.getElementById("totalPrice");
 let total = 0;
+
 // ************************** //
 
 // ------- Fonction "card" qui injecte le code html dans la balise <section> avec l'id cart__items ------------- //
-card(recupArray);
-    
+
+card(productArray);
 function card(results) {
     let canapHtml = "";
     results.forEach((item) => {
@@ -42,37 +43,30 @@ function card(results) {
         `
     });
     cartItems.innerHTML = canapHtml;
+    
     // ------------ Prix Total de la commande ----------------------- //
+    
     results.forEach(item => {
         total += item.quantity * item.price;
     });
 
     totalPrice.textContent = total/100;
+    
     // ************************** //
+    
 };
 // ************************** //
 
 // ------------ supprimer un objet -------------------- //
+
 let deleteItems = document.querySelectorAll(".deleteItem");
 
-
-deleteItems.forEach(item => {
-  item.addEventListener('click', event => {
-    const article = event.target.closest('article')
-    const id = article.getAttribute('data-id')
-    article.remove(id);
-    // localStorage.setItem("recupArray", JSON.stringify(recupArray));
-  });
+for (let index = 0; index < deleteItems.length; index++)
+deleteItems[index].addEventListener("click", (event) => {
+  productArray.splice(index, 1);
+  localStorage.setItem("productArray", JSON.stringify(productArray));
+  location.reload();
 });
-
-// deleteItem.addEventListener("click", (event) => {
-//     console.log(idItem);
-//     console.log("l'article parent est : ", event.target.closest("article"));
-//     recupArray.forEach((item) => {
-//       console.log(item._id);
-//       event.target.closest("article");
-//     });
-// });
 
 // ************************** //
 
@@ -91,19 +85,23 @@ order.addEventListener("click", (e) => {
     city: document.getElementById("city").value,
     email: document.getElementById("email").value,
   };
+
   // ************************** //
 
   // -------- Gestion validation formulaire ------------- //
   // Contrôle firstName, lastName, address et city
+
   const RegExp1 = (value) => {
     return /^[A-Za-z]{3,15}$/.test(value);
-  }
+  };
+
   // ************************** //
 
   // Contrôle du email
   const regExp2 = (value) => {
     return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
   };
+
   // ************************** //
 
   function controle1(){
@@ -133,32 +131,60 @@ order.addEventListener("click", (e) => {
   // ************************** //
 
   // ------------------- condition de controle du remplissage du formulaire -------------- // 
+  
   if(controle1() && controle2()){
     // Mettre l'objet "formulaireValues" dans le localStorage
     // localStorage.setItem("contact", JSON.stringify(contact));
     console.log("Formulaire rempli !");
     alert("Merci d'avoir rempli le formulaire");
+    document.location.href="confirmation.html";
   }else{
     alert("Veuillez bien rempli le formulaire");
   };
+
+  // ************************** //
+
+  // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
+  let productIdArray = productArray.map(function(product) {
+    return product._id;
+  });
+
+  console.log(productIdArray);
+  localStorage.setItem("productIdArray", JSON.stringify(productIdArray));
   
+  // ************************** //
+  console.log(productIdArray);
   // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
-  // const aEnvoyer = {
-  //   contact,
-  //   recupArray,
-  // };
 
-  // localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
+  const aEnvoyer = {
+    contact,
+    productArray,
+    productIdArray,
+  };
 
+  localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
 
   // ************************** //
 
   // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
   
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type" : "application/json",
+    },
+    body: JSON.stringify(aEnvoyer),
+  })
+    .then(response => response.json())
+    .then((id) => {
+      localStorage.clear();
+      document.location.href="confirmation.html?id=${id.orderId}";
+      console.log("OK !!");
+    })
+
+
   // ************************** //
 
-  // redirection page confirmation de commande
-  document.location.href="confirmation.html";
-  // ************************** //
 
 });
