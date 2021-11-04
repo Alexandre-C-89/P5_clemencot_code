@@ -137,7 +137,6 @@ order.addEventListener("click", (e) => {
     // localStorage.setItem("contact", JSON.stringify(contact));
     console.log("Formulaire rempli !");
     alert("Merci d'avoir rempli le formulaire");
-    document.location.href="confirmation.html";
   }else{
     alert("Veuillez bien rempli le formulaire");
   };
@@ -145,21 +144,20 @@ order.addEventListener("click", (e) => {
   // ************************** //
 
   // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
-  let productIdArray = productArray.map(function(product) {
+  let products = productArray.map(function(product) {
     return product._id;
   });
 
-  console.log(productIdArray);
-  localStorage.setItem("productIdArray", JSON.stringify(productIdArray));
+  localStorage.setItem("products", JSON.stringify(products));
   
   // ************************** //
-  console.log(productIdArray);
+
   // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
 
   const aEnvoyer = {
     contact,
     productArray,
-    productIdArray,
+    products,
   };
 
   localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
@@ -179,12 +177,11 @@ order.addEventListener("click", (e) => {
     .then(response => response.json())
     .then((id) => {
       localStorage.clear();
-      document.location.href="confirmation.html?id=${id.orderId}";
+      document.location.href= `confirmation.html?id=${id.orderId}`;
       console.log("OK !!");
     })
-
+    .catch(err => console.log(err))
 
   // ************************** //
-
 
 });
