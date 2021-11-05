@@ -57,6 +57,7 @@ function card(results) {
     // ************************** //
     
 };
+
 // ************************** //
 
 // ------------ supprimer un objet -------------------- //
@@ -118,6 +119,7 @@ order.addEventListener("click", (e) => {
       return false;
     }
   };
+
   // ************************** //
 
   // ------------- Contrôle de la validité du prénom ---------------- //
@@ -130,6 +132,7 @@ order.addEventListener("click", (e) => {
       return false;
     }
   };
+
   // ************************** //
 
   // ------------------- condition de controle du remplissage du formulaire -------------- // 
@@ -146,6 +149,7 @@ order.addEventListener("click", (e) => {
   // ************************** //
 
   // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
+  
   let products = productArray.map(function(product) {
     return product._id;
   });

@@ -1,13 +1,16 @@
 // ------------ Récupère l'id du canapé sélectionné -------- //
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const canapId = urlParams.get("id");
 let urlAPI = "http://localhost:3000/api/products/"+ canapId;
+
 // console.log(window.location);
 
 // ************************** //
 
 // -------------- Création de variables pour intégrer l'img, le prix, titre, description etc...-----------//
+
 let itemImg = document.querySelector(".item__img");
 let img = document.createElement("img");
 let balisePrice = document.getElementById("price");
@@ -23,6 +26,7 @@ let productArray = [];
 // ************************** //
 
 // ---------------- Création de la méthode Fetch ------------ //
+
 fetch(urlAPI)
   .then(function(res) {
     if (res.ok) {
@@ -67,6 +71,7 @@ fetch(urlAPI)
     };
 
     // ************************** //
+
     // ---------------- fonction qui repère les changements du select couleur ---------------- //
     
     select.addEventListener('change', ColorChanged);
@@ -114,4 +119,5 @@ fetch(urlAPI)
   .catch(function() {
     console.log("Erreur !");
   })
+  
 // ************************** //
