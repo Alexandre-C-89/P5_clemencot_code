@@ -12,45 +12,47 @@ let total = 0;
 card(productArray);
 function card(results) {
     let canapHtml = "";
-    results.forEach((item) => {
-        canapHtml += `
-        <article class="cart__item" data-id="${item._id}">
-            <div class="cart__item__img">
-                <img src="${item.image}" alt="Photographie d'un canapé">
-            </div>
-
-            <div class="cart__item__content">
-                
-                <div class="cart__item__content__titlePrice">
-                    <h2>${item.name}</h2>
-                    <p>${item.price/100}</p>
-                </div>
-
-                <div class="cart__item__content__settings">
-                
-                    <div class="cart__item__content__settings__quantity">
-                        <p>Qté : </p>
-                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
-                    </div>
-
-                    <div class="cart__item__content__settings__delete">
-                        <p class="deleteItem">Supprimer</p>
-                    </div>
-
-                </div>
-            </div>
-        </article>
-        `
-    });
-    cartItems.innerHTML = canapHtml;
-    
-    // ------------ Prix Total de la commande ----------------------- //
-    
-    results.forEach(item => {
-        total += item.quantity * item.price;
-    });
-
-    totalPrice.textContent = total/100;
+    if (results) {
+      results.forEach((item) => {
+          canapHtml += `
+          <article class="cart__item" data-id="${item._id}">
+              <div class="cart__item__img">
+                  <img src="${item.image}" alt="Photographie d'un canapé">
+              </div>
+  
+              <div class="cart__item__content">
+                  
+                  <div class="cart__item__content__titlePrice">
+                      <h2>${item.name}</h2>
+                      <p>${item.price/100}</p>
+                  </div>
+  
+                  <div class="cart__item__content__settings">
+                  
+                      <div class="cart__item__content__settings__quantity">
+                          <p>Qté : </p>
+                          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
+                      </div>
+  
+                      <div class="cart__item__content__settings__delete">
+                          <p class="deleteItem">Supprimer</p>
+                      </div>
+  
+                  </div>
+              </div>
+          </article>
+          `
+      });
+      cartItems.innerHTML = canapHtml;
+      
+      // ------------ Prix Total de la commande ----------------------- //
+      
+      results.forEach(item => {
+          total += item.quantity * item.price;
+      });
+  
+      totalPrice.textContent = total/100;
+    };
     
     // ************************** //
     
