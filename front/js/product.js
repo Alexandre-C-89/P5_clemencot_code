@@ -39,8 +39,8 @@ fetch(urlAPI)
     img.src = dataCanap.imageUrl;
     itemImg.appendChild(img);
     balisePrice.innerHTML = `${dataCanap.price/100}`;
-    title.innerHTML =`${dataCanap.name}`
-    description.innerHTML =`${dataCanap.description}`
+    title.innerHTML =`${dataCanap.name}`;
+    description.innerHTML =`${dataCanap.description}`;
     
     // ----------- Intégration des couleurs dans la balise select avec une boucle forEach -------------- //
     const createOption = option => {
@@ -58,13 +58,13 @@ fetch(urlAPI)
     // ---------------- fonction qui repère les changements de l'input quantité ---------------- // 
     
     Qty.addEventListener('change', quantityChanged);
-    let getQty = 1  ;
+    let getQty = 1;
     
     function quantityChanged(event) {
-      let input = event.target
+      let input = event.target;
       if (isNaN(input.value) || input.value <= 0) {
         input.value = 1;
-      }
+      };
       getQty = input.value;
       console.log(getQty);
       return getQty;
@@ -78,7 +78,7 @@ fetch(urlAPI)
     let getColor = "";
     
     function ColorChanged(event) {
-        let input = event.target
+        let input = event.target;
         if (input.value === null) {
             input.value = "";
         }
@@ -93,6 +93,7 @@ fetch(urlAPI)
   
     addToCart.addEventListener("click", goCart);
     function goCart(){
+      
       let Product = {
         "_id": dataCanap._id,
         "name": dataCanap.name,
@@ -102,22 +103,49 @@ fetch(urlAPI)
         "price": dataCanap.price,
         "description": dataCanap.description,
       };
-
-      if(localStorage && localStorage.getItem("productArray")) {
-        productArray = JSON.parse(localStorage.getItem("productArray"));
+      
+      
+      // SI localeStorage existe, ALORS je cherche si le produit 
+      // que je veux enregistré est déjà présent dans le localeStorage
+      let product = productArray.find(item => item._id === Product._id && item.color == Product.color);
+      if (product) {
+        product.quantity = parseInt(product.quantity) + Product.quantity;
+        // localStorage.setItem("productArray", JSON.stringify(productArray));
+        console.log("un produit est déjà dans le panier alors j'incrémente la quantité de 1");
+      } else {
+        productArray.push(Product);
+        // localStorage.setItem("productArray", JSON.stringify(productArray));
       }
-      productArray.push(Product);
       localStorage.setItem("productArray", JSON.stringify(productArray));
-      console.log("Produit enregistrer dans le localeStorage !");
-      document.location.href="cart.html";
-      console.log(Product._id);
+
+
+      // Si le produit existe je vérifie qu'il ne soit pas indentique
+      // if (productArray == 0) {
+      //   console.log("productArray est vide du coup je push !");
+      //   productArray.push(Product);
+      //   localStorage.setItem("productArray", JSON.stringify(productArray));
+      //   // document.location.href="cart.html";
+      // } else if (product) {
+      //   let product = productArray.find(item => item._id === Product._id && item.color == Product.color);
+      //   console.log("product = true");
+      //   product.quantity = parseInt(product.quantity) + Product.quantity;
+      //   localStorage.setItem("productArray", JSON.stringify(productArray));
+      // }
+      
+      
+      // if (localStorage && localStorage.getItem("productArray")) {
+      //     // productArray.push(Product);
+      //     // localStorage.setItem("productArray", JSON.stringify(productArray));
+      //     console.log("il y a déjà un produit !");
+      // };
+
+      // document.location.href="cart.html";
+      // ************************** //
     };
-    
-    // ************************** //
-  
+
   })
-  .catch(function() {
+  .catch(function(err) {
     console.log("Erreur !");
-  })
+  });
   
 // ************************** //
