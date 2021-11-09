@@ -20,7 +20,7 @@ let select = document.getElementById("colors"); // Récupère la balise avec l'I
 let baliseOtpion = document.getElementById("option");
 let Qty = document.getElementById("quantity");
 let addToCart = document.getElementById("addToCart");
-let productArray = [];
+let productArray = JSON.parse(localStorage.getItem("productArray")) || [];
 // console.log(colors);
 
 // ************************** //
@@ -90,7 +90,8 @@ fetch(urlAPI)
     // ************************** //
 
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
-  
+  console.log(productArray);
+  console.log(localStorage);
     addToCart.addEventListener("click", goCart);
     function goCart(){
       
@@ -110,37 +111,15 @@ fetch(urlAPI)
       let product = productArray.find(item => item._id === Product._id && item.color == Product.color);
       if (product) {
         product.quantity = parseInt(product.quantity) + Product.quantity;
-        // localStorage.setItem("productArray", JSON.stringify(productArray));
-        console.log("un produit est déjà dans le panier alors j'incrémente la quantité de 1");
+        localStorage.setItem("productArray", JSON.stringify(productArray));
       } else {
         productArray.push(Product);
-        // localStorage.setItem("productArray", JSON.stringify(productArray));
+        localStorage.setItem("productArray", JSON.stringify(productArray));
       }
-      localStorage.setItem("productArray", JSON.stringify(productArray));
+      document.location.href="cart.html";
 
-
-      // Si le produit existe je vérifie qu'il ne soit pas indentique
-      // if (productArray == 0) {
-      //   console.log("productArray est vide du coup je push !");
-      //   productArray.push(Product);
-      //   localStorage.setItem("productArray", JSON.stringify(productArray));
-      //   // document.location.href="cart.html";
-      // } else if (product) {
-      //   let product = productArray.find(item => item._id === Product._id && item.color == Product.color);
-      //   console.log("product = true");
-      //   product.quantity = parseInt(product.quantity) + Product.quantity;
-      //   localStorage.setItem("productArray", JSON.stringify(productArray));
-      // }
-      
-      
-      // if (localStorage && localStorage.getItem("productArray")) {
-      //     // productArray.push(Product);
-      //     // localStorage.setItem("productArray", JSON.stringify(productArray));
-      //     console.log("il y a déjà un produit !");
-      // };
-
-      // document.location.href="cart.html";
       // ************************** //
+ 
     };
 
   })
