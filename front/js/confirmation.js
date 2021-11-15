@@ -17,6 +17,7 @@ console.log(orderId);
 function removeStorage() {
     localStorage.removeItem('Product');
     localStorage.removeItem('ProductArray');
+    localStorage.removeItem('contact');
 };
 
 removeStorage();
