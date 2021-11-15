@@ -90,8 +90,7 @@ fetch(urlAPI)
     // ************************** //
 
     // ------------- Récupération de la quantité et utilisation .AddEventListener sur le bouton --------------- //
-  console.log(productArray);
-  console.log(localStorage);
+
     addToCart.addEventListener("click", goCart);
     function goCart(){
       

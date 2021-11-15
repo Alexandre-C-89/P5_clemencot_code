@@ -14,8 +14,19 @@ console.log(orderId);
 
 // ********************* //
 
+function removeStorage() {
+    localStorage.removeItem('Product');
+    localStorage.removeItem('ProductArray');
+};
+
+removeStorage();
+
 // ------------ J'insère l'id de la commande dans la balise avec l'id orderId ------------ //
 
 orderId.innerHTML = idCommand;
+
+orderId.insertAdjacentHTML('afterend', '<div id="two">Nous vous remercions pour votre commande !</div>');
+
+console.log();
 
 // ********************* //
