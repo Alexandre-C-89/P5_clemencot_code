@@ -102,9 +102,9 @@ order.addEventListener("click", (e) => {
 
   // Contrôle du email
   const regExp2 = (value) => {
-    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+    // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+    return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
   };
-
   // ************************** //
 
   function controle1(){
