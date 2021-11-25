@@ -104,7 +104,7 @@ order.addEventListener("click", (e) => {
   };
   
   const RegExp4 = (value) => {
-    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{3,10}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
   };
 
   // ************************** //
@@ -145,7 +145,7 @@ order.addEventListener("click", (e) => {
   };
 
   // ************************** //
-  
+
   // ------------- Contrôle de la validité de l'adresse ---------------- //
   function controle5(){
     const address = contact.address;
