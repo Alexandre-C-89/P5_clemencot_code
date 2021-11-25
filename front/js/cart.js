@@ -140,54 +140,55 @@ order.addEventListener("click", (e) => {
   if(controle1() && controle2()){
     // Mettre l'objet "formulaireValues" dans le localStorage
     // localStorage.setItem("contact", JSON.stringify(contact));
+    // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
+    
+    let products = productArray.map(function(product) {
+      return product._id;
+    });
+  
+    localStorage.setItem("products", JSON.stringify(products));
+    
+    // ************************** //
+  
+    // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
+  
+    const aEnvoyer = {
+      contact,
+      productArray,
+      products,
+    };
+  
+    localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
+  
+    // ************************** //
+  
+    // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
+    
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify(aEnvoyer),
+    })
+      .then(response => response.json())
+      .then((id) => {
+        localStorage.clear();
+        document.location.href= `confirmation.html?id=${id.orderId}`;
+        console.log("OK !!");
+      })
+      .catch(err => console.log(err))
+  
+    // ************************** //
     console.log("Formulaire rempli !");
     alert("Merci d'avoir rempli le formulaire");
   }else{
     alert("Veuillez bien rempli le formulaire");
+    return 
   };
 
   // ************************** //
 
-  // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
-  
-  let products = productArray.map(function(product) {
-    return product._id;
-  });
-
-  localStorage.setItem("products", JSON.stringify(products));
-  
-  // ************************** //
-
-  // ----------- Mettre les values du formulaire et mettre les produits seléctionnés dans un objet à envoyer vers le serveur ------------ //
-
-  const aEnvoyer = {
-    contact,
-    productArray,
-    products,
-  };
-
-  localStorage.setItem("aEnvoyer", JSON.stringify(aEnvoyer));
-
-  // ************************** //
-
-  // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
-  
-  fetch("http://localhost:3000/api/products/order", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type" : "application/json",
-    },
-    body: JSON.stringify(aEnvoyer),
-  })
-    .then(response => response.json())
-    .then((id) => {
-      localStorage.clear();
-      document.location.href= `confirmation.html?id=${id.orderId}`;
-      console.log("OK !!");
-    })
-    .catch(err => console.log(err))
-
-  // ************************** //
 
 });
