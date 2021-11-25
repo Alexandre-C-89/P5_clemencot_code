@@ -106,7 +106,7 @@ order.addEventListener("click", (e) => {
   // ************************** //
   
   const RegExp3 = (value) => {
-    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+    return /^(([a-zA-ZÀ-ÿ0-9][a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
   };
   
   const RegExp4 = (value) => {
@@ -123,7 +123,6 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       firstNameErrorMsg.innerHTML = "Veuillez remplir le champ prénom correctement";
       return false;
     }
@@ -138,7 +137,6 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       lastNameErrorMsg.innerHTML = "Veuillez remplir le champ nom correctement";
       return false;
     }
@@ -153,7 +151,6 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const addressErrorMsg = document.getElementById("addressErrorMsg");
-      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       addressErrorMsg.innerHTML = "Veuillez remplir le champ adresse correctement";
       return false;
     }
@@ -168,7 +165,6 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       let cityErrorMsg = document.getElementById("cityErrorMsg");
-      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       cityErrorMsg.innerHTML = "Veuillez remplir le champ ville correctement";
       return false;
     }
@@ -184,7 +180,6 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const emailErrorMsg = document.getElementById("emailErrorMsg");
-      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       emailErrorMsg.innerHTML = "Veuillez remplir le champ email correctement";
       return false;
     }
