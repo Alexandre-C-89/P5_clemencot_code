@@ -98,23 +98,24 @@ order.addEventListener("click", (e) => {
     return /^[A-Za-z]{3,15}$/.test(value);
   };
   
-  // Contrôle du email
-  const regExp2 = (value) => {
+   // Contrôle du email
+   const regExp2 = (value) => {
     // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
     return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
   };
-  // ************************** //
   
   const RegExp3 = (value) => {
-    return /^(([a-zA-ZÀ-ÿ0-9][a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+    return /^(([a-zA-ZÀ-ÿ0-9]+[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
   };
   
   const RegExp4 = (value) => {
-    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{3,10}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
   };
 
   // ************************** //
 
+ 
+  // ************************** //
 
   function controle1(){
     // Contrôle de la validité du prénom
@@ -137,13 +138,14 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       lastNameErrorMsg.innerHTML = "Veuillez remplir le champ nom correctement";
       return false;
     }
   };
 
   // ************************** //
-
+  
   // ------------- Contrôle de la validité de l'adresse ---------------- //
   function controle5(){
     const address = contact.address;
@@ -151,6 +153,7 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const addressErrorMsg = document.getElementById("addressErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       addressErrorMsg.innerHTML = "Veuillez remplir le champ adresse correctement";
       return false;
     }
@@ -165,6 +168,7 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       let cityErrorMsg = document.getElementById("cityErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       cityErrorMsg.innerHTML = "Veuillez remplir le champ ville correctement";
       return false;
     }
@@ -180,6 +184,7 @@ order.addEventListener("click", (e) => {
       return true;
     }else{
       const emailErrorMsg = document.getElementById("emailErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
       emailErrorMsg.innerHTML = "Veuillez remplir le champ email correctement";
       return false;
     }
@@ -223,13 +228,14 @@ order.addEventListener("click", (e) => {
         "Content-Type" : "application/json",
       },
       body: JSON.stringify(aEnvoyer),
-    }).then(response => response.json())
+    }
+      ).then(response => response.json())
       .then((id) => {
         localStorage.clear();
         document.location.href= `confirmation.html?id=${id.orderId}`;
         console.log("OK !!");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   
     // ************************** //
     console.log("Formulaire rempli !");
