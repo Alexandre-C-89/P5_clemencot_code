@@ -97,6 +97,15 @@ order.addEventListener("click", (e) => {
   const RegExp1 = (value) => {
     return /^[A-Za-z]{3,15}$/.test(value);
   };
+  
+  
+  const RegExp3 = (value) => {
+    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+  };
+  
+  const RegExp4 = (value) => {
+    return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
+  };
 
   // ************************** //
 
@@ -110,25 +119,73 @@ order.addEventListener("click", (e) => {
   function controle1(){
     // Contrôle de la validité du prénom
     const firstName = contact.firstName;
-    const lastName = contact.lastName;
-    const city = contact.city;
-    if(RegExp1(firstName, lastName, city)){
+    if(RegExp1(firstName)){
       return true;
     }else{
+      const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
       alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      firstNameErrorMsg.innerHTML = "Veuillez remplir le champ prénom correctement";
+      return false;
+    }
+  };
+  
+  // ************************** //
+  
+  // ------------- Contrôle de la validité du prénom ---------------- //
+  function controle3(){
+    const lastName = contact.lastName;
+    if(RegExp1(lastName)){
+      return true;
+    }else{
+      const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      lastNameErrorMsg.innerHTML = "Veuillez remplir le champ nom correctement";
+      return false;
+    }
+  };
+
+  // ************************** //
+  
+  // ------------- Contrôle de la validité de l'adresse ---------------- //
+  function controle5(){
+    const address = contact.address;
+    if(RegExp4(address)){
+      return true;
+    }else{
+      const addressErrorMsg = document.getElementById("addressErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      addressErrorMsg.innerHTML = "Veuillez remplir le champ adresse correctement";
+      return false;
+    }
+  };
+
+  // ************************** //
+  
+  // ------------- Contrôle de la validité de la ville ---------------- //
+  function controle4(){
+    const city = contact.city;
+    if(RegExp3(city)){
+      return true;
+    }else{
+      let cityErrorMsg = document.getElementById("cityErrorMsg");
+      alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      cityErrorMsg.innerHTML = "Veuillez remplir le champ ville correctement";
       return false;
     }
   };
 
   // ************************** //
 
-  // ------------- Contrôle de la validité du prénom ---------------- //
+  
+  // ------------- Contrôle de la validité de l'email ---------------- //
   function controle2(){
     const email = contact.email;
     if(regExp2(email)){
       return true;
     }else{
+      const emailErrorMsg = document.getElementById("emailErrorMsg");
       alert("Chiffre et symbole ne sont pas autorisé \n Ne pas dépasser 20 caractères, minimum 3 caractères");
+      emailErrorMsg.innerHTML = "Veuillez remplir le champ email correctement";
       return false;
     }
   };
@@ -137,7 +194,7 @@ order.addEventListener("click", (e) => {
 
   // ------------------- condition de controle du remplissage du formulaire -------------- // 
   
-  if(controle1() && controle2()){
+  if(controle1() && controle2() && controle3() && controle4() && controle5()){
     // Mettre l'objet "formulaireValues" dans le localStorage
     // localStorage.setItem("contact", JSON.stringify(contact));
     // -------------- Boucle pour récupérer les id des produits du tableau de produits ----------- //
@@ -164,14 +221,14 @@ order.addEventListener("click", (e) => {
   
     // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
     
-    fetch("http://localhost:3000/api/products/order", {
+    fetch("http://localhost:3000/api/products/order"), {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type" : "application/json",
       },
       body: JSON.stringify(aEnvoyer),
-    })
+    }
       .then(response => response.json())
       .then((id) => {
         localStorage.clear();
@@ -183,12 +240,11 @@ order.addEventListener("click", (e) => {
     // ************************** //
     console.log("Formulaire rempli !");
     alert("Merci d'avoir rempli le formulaire");
+
   }else{
     alert("Veuillez bien rempli le formulaire");
-    return 
   };
 
   // ************************** //
-
 
 });
