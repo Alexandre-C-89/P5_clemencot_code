@@ -98,6 +98,12 @@ order.addEventListener("click", (e) => {
     return /^[A-Za-z]{3,15}$/.test(value);
   };
   
+  // Contrôle du email
+  const regExp2 = (value) => {
+    // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+    return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+  };
+  // ************************** //
   
   const RegExp3 = (value) => {
     return /^(([a-zA-ZÀ-ÿ0-9]+[\s-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,50}$/.test(value);
@@ -109,12 +115,6 @@ order.addEventListener("click", (e) => {
 
   // ************************** //
 
-  // Contrôle du email
-  const regExp2 = (value) => {
-    // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
-    return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
-  };
-  // ************************** //
 
   function controle1(){
     // Contrôle de la validité du prénom
@@ -221,21 +221,20 @@ order.addEventListener("click", (e) => {
   
     // ------------------ Fetch : POST pour récupérer l'id de la commande ----------------- //
     
-    fetch("http://localhost:3000/api/products/order"), {
+    fetch(("http://localhost:3000/api/products/order"), {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type" : "application/json",
       },
       body: JSON.stringify(aEnvoyer),
-    }
-      .then(response => response.json())
+    }).then(response => response.json())
       .then((id) => {
         localStorage.clear();
         document.location.href= `confirmation.html?id=${id.orderId}`;
         console.log("OK !!");
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   
     // ************************** //
     console.log("Formulaire rempli !");
