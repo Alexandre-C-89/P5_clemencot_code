@@ -14,11 +14,11 @@ fetch("http://localhost:3000/api/products")
   })
   .then(function(DataCanap) {
     card(DataCanap);
+    console.log(DataCanap);
   })
   .catch(function(err) {
     console.log("Erreur !");
   });
-
 // *********************** //
 
 // ------- Fonction "card" qui injecte le code html dans la balise <section> avec l'id items ------------- //
